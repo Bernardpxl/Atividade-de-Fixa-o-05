@@ -60,11 +60,10 @@ print('Tabela Dinâmica:')
 print(tabela_pivot)
 
 
+def calcular_zscore(serie):
+    return (serie - serie.mean()) / serie.std()
 
-media_estado = df.groupby('estado_cliente')['valor'].transform('mean')
-desvio_estado = df.groupby('estado_cliente')['valor'].transform('std')
-
-df['z_score'] = (df['valor'] - media_estado) / desvio_estado
+df['z_score'] = df.groupby('estado_cliente')['valor'].transform(calcular_zscore)
 
 
 anomalias = df[df['z_score'] > 2.5]
